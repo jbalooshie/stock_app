@@ -57,7 +57,19 @@ def server(input, output, session):
     @output
     @render.table
     def results_table():
-        return ticker_data.get()  # Get the latest DataFrame stored in ticker_data
+        # Get the latest DataFrame stored in ticker_data and sort it in descending order
+        df = ticker_data.get()
+        column_names = df.columns.tolist()
+        print(column_names)
+        df = df.sort_values(by = 'date', ascending=False)
+        df['date'] = df['date'].dt.strftime('%Y-%m-%d')
+        return df
+
+
+
+
+
+
 
 # Create and run the app
 app = App(app_ui, server)
